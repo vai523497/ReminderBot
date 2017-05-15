@@ -1,5 +1,8 @@
 package com.springBootExample.mainController;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.springBootExample.dto.ResponseDTO;
 import com.springBootExample.dto.UserDTO;
 import com.springBootExample.model.User;
+import com.springBootExample.reminderBot.Messaging;
 import com.springBootExample.reminderBot.ReminderBot;
 import com.springBootExample.service.IUserService;
 
@@ -26,6 +30,7 @@ public class DemoController {
 	@RequestMapping("/")
 	public String index() {
 		/* this.userService.getUser(1l) */
+
 		return "index";
 	}
 
@@ -62,19 +67,16 @@ public class DemoController {
 	@RequestMapping(value = "/request-data", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void readData(@RequestBody ReminderBot reminderBot) throws Throwable {
-		String PAGE_ACCESS_TOKEN = "EAATQXuGjJdEBAEfNDSzZCr71oaPZAsn49b53TxgBAlzqJZBAZAJJjJ9GOIaBVrZBOW4QF3Mqpw3REoEo8ZCAg4SdjTtAfVUpH5ImNcrWcy3X0RdRxpk5rGH8bTJrTavFkVBrlZA23JZAoD5NwpNZC6Wk31aZC0sIosY0VzjlAzwoUgTAZDZD";
-
-		ResponseDTO responseDTO = new ResponseDTO();
-		responseDTO.getRecipient().setId("");
-		responseDTO.getMessage().setText("hi");
-		responseDTO.getMessage().setMetadata("");
-
+		final String PAGE_ACCESS_TOKEN = "EAASawSn52GsBAK2I8XBNoaoPRD3cZB87VzNzZCcKZB5TZAVCv8wdYCeVzTzS5DOzOZBC7JFZAO5XCe4lk7KRaFhdd9afXxNTwblZAzq70jR9s9Id4dM1LZA1scmATv9oWFtgLU4wWvn9KRC0FwxgAAB2avVnV5zJbTPJH6JpAory1wZDZD";
+		String sender_Id = String
+				.valueOf(reminderBot.getEntry().iterator().next().getMessaging().iterator().next().getSender().getId());
 		final String uri = "https://graph.facebook.com/v2.6/me/messages?access_token=" + PAGE_ACCESS_TOKEN;
-
-		System.out.println("Test wit github");
-
-		
-
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseDTO rs = new ResponseDTO();
+		rs.getRecipient().setId(sender_Id);
+		String Message = getTextMessage(reminderBot);
+		rs.getMessage().setText(Message);
+		restTemplate.postForObject(uri, rs, ResponseDTO.class);
 	}
 
 	@RequestMapping(value = "/request-data", method = RequestMethod.GET)
@@ -88,6 +90,13 @@ public class DemoController {
 		System.out.println(hubMode + "  :  " + hubVerifyToken + " :   " + hubChallenge);
 		return hubChallenge;
 
+	}
+
+	private String getTextMessage(ReminderBot reminderBot) {
+		Set<Messaging> SetOfMessage = reminderBot.getEntry().iterator().next().getMessaging();
+		Iterator<Messaging> itr = SetOfMessage.iterator();
+
+		return itr.next().getMessage().getText();
 	}
 
 }

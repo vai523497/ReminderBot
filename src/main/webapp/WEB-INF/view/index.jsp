@@ -167,7 +167,7 @@
         <div class="col-md-8 col-md-push-2">
             <div id="sendmessage">Your message has been sent. Thank you!</div>
             <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
+            <form  method="post" role="form" class="contactForm">
                 <div class="form-group">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                     <div class="validation"></div>
@@ -185,7 +185,7 @@
                     <div class="validation"></div>
                 </div>
                 
-                <div class="text-center"><button type="submit" class="btn btn-primary btn-lg">Send Message</button></div>
+                <div class="text-center"><button type="submit"  onclick ="getFormData()" class="btn btn-primary btn-lg">Send Message</button></div>
             </form>
         </div>
         
@@ -241,6 +241,7 @@
   </footer>
   
     <script src="js/jquery.min.js"></script>
+    <script src="js/FeedBack.js"></script>
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.bxslider.min.js"></script>
