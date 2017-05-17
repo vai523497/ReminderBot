@@ -25,4 +25,11 @@ public class ResponseDTO {
 		this.message = message;
 	}
 
+	@Override
+	public String toString() {
+		return "{recipient : " + recipient.getId() + ", message : " + message.getText() + "}";
+	}
+	
+	
+
 }
