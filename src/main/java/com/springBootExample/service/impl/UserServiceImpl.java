@@ -6,11 +6,13 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springBootExample.component.GetResponse;
 import com.springBootExample.dao.ReminderRepository;
 import com.springBootExample.dao.UserRepository;
 import com.springBootExample.dto.UserDTO;
 import com.springBootExample.model.Reminder;
 import com.springBootExample.model.User;
+import com.springBootExample.reminderBot.ReminderBot;
 import com.springBootExample.service.IUserService;
 
 @Service
@@ -47,24 +49,29 @@ public class UserServiceImpl implements IUserService {
 		Reminder reminder = new Reminder();
 		reminder.setReminderName("name");
 		reminder.setUser(user);
-		String date =  new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
+		String date = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
 		reminder.setReminderTime(date);
 
 		this.reminderRepository.save(reminder);
 		Reminder reminder1 = new Reminder();
 		reminder1.setReminderName("name");
 		reminder1.setUser(user);
-		String date1 =  new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
+		String date1 = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
 		reminder.setReminderTime(date1);
 		this.reminderRepository.save(reminder1);
 
 	}
 
-	
-
 	public Reminder reminder() throws Throwable {
 		Reminder reminder = this.reminderRepository.findAll().get(0);
 		return reminder;
+	}
+
+	@Override
+	public String sendResponse(ReminderBot reminderBot) throws Throwable {
+		 
+		return new GetResponse().generateResponse(reminderBot);
+
 	}
 
 }
