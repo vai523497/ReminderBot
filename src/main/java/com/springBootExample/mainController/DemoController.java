@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.springBootExample.dto.UserDTO;
 import com.springBootExample.model.User;
-import com.springBootExample.reminderBot.ReminderBot;
 import com.springBootExample.service.IUserService;
 
 @Controller
@@ -56,7 +55,7 @@ public class DemoController {
 
 	@RequestMapping(value = "/request-data", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public void readData(@RequestBody ReminderBot reminderBot) throws Throwable {
+	public void readData(@RequestBody String reminderBot) throws Throwable {
 		String response = userService.sendResponse(reminderBot);
 		System.out.println(response);
 	}

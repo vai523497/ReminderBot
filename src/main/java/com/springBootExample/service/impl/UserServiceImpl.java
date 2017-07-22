@@ -6,13 +6,12 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springBootExample.component.GetResponse;
+import com.ResponceGenerator.SpecifiedMSGWebhookReponse;
 import com.springBootExample.dao.ReminderRepository;
 import com.springBootExample.dao.UserRepository;
 import com.springBootExample.dto.UserDTO;
 import com.springBootExample.model.Reminder;
 import com.springBootExample.model.User;
-import com.springBootExample.reminderBot.ReminderBot;
 import com.springBootExample.service.IUserService;
 
 @Service
@@ -68,9 +67,15 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public String sendResponse(ReminderBot reminderBot) throws Throwable {
-		 
-		return new GetResponse().generateResponse(reminderBot);
+	public String sendResponse(String reminderBot) throws Throwable {
+
+		SpecifiedMSGWebhookReponse test = new SpecifiedMSGWebhookReponse();
+		test.setRequestUrl("https://graph.facebook.com/v2.6/me/messages?access_token=",
+				"EAAbTgBtVwEgBAKZCsDgvdjgQX4to8gGOqQyjZAC9cgfU5nIbpVFqV4CpOsxnDWh3StOOPdwci9yVHIWIUn2WBsM4eHhzBBLGpUsD0ti1y2GIZACkXSBvif369DywfZCIZANkQqagxLzNXbCabePgS8zjYlmZAp6LZBjMcjw75nCmwZDZD");
+		System.out.println(test.getUserMesssage(reminderBot));
+		test.responseMSG();
+
+		return "";
 
 	}
 

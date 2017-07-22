@@ -33,6 +33,6 @@ public class FBCHATPropeties {
 		return FBCHATPropeties.fbConfigs.getProperty(key);
 	}
 	
-	/* public static void main(String[] args){} */
+	
 
 }
